@@ -3,11 +3,11 @@
 from twitter import *
 import csv
 import requests
+import os
 
 def main():
-
   config = {}
-  execfile("/Users/khsia/Desktop/finalproject/config.py", config)
+  execfile(os.getcwd() + "/config.py", config)
   twitter = Twitter(
               auth = OAuth(config["access_key"], config["access_secret"], config["consumer_key"], config["consumer_secret"]))
   runQuery(twitter, "hospital")
@@ -16,7 +16,7 @@ def main():
 
 def runQuery(twitter, word):
   query = twitter.search.tweets(q = word, lang="en", count="100")
-  with open("/Users/khsia/Desktop/finalproject/"+word+".csv", 'wb') as outfile:
+  with open(os.getcwd() + "/" + word+".csv", 'a') as outfile:
     writer = csv.writer(outfile)
     for result in query["statuses"]:
       text = result["text"].encode('utf-8')
