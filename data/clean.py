@@ -31,15 +31,3 @@ for index, row in df.iterrows():
 df.insert(4, 'GapofDays', li)
 
 df.to_csv('clean_noshow.csv', mode = 'w', index=False)
-
-
-
-
-
-'''
-d0 = date(2008, 8, 18)
-d1 = date(2008, 9, 26)
-delta = d0 - d1
-print delta.days
-df.insert(idx, col_name, value)
-'''
