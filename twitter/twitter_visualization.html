@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>D3: Movie Bar Chart</title>
+        <script type="text/javascript" src="https://d3js.org/d3.v4.js"></script>
+        <style type="text/css">
+            /* No style rules here yet */        
+        </style>
+    </head>
+    <body>
+        <script type="text/javascript">
+            // CODE GOES HERE
+
+            var csv = "hospital appointment"
+            var type = "negative"
+
+            d3.csv(csv+".csv", function(dataset) {
+
+              var svg = d3.select("body")
+              .append("svg")
+              .attr("width", 1000)
+              .attr("height", 600)
+              .attr("border", 5);
+
+              svg.append("rect")
+              .attr("x", 0)
+              .attr("y", 0)
+              .attr("height", 500)
+              .attr("width", 800)
+              .attr("stroke", "black")
+              .attr("fill", "none")
+              .style("stroke-width", 5)
+
+              svg.selectAll("circle")
+              .data(dataset)
+              .enter()
+              .append("circle")
+              .attr("fill", "teal")
+              .attr("opacity", .01)
+              .attr("cx", function(d) {
+                Xvalue = {'Sun': 1, 'Mon': 2, 'Tue': 3, 'Wed': 4, 'Thu': 5, 'Fri': 6, 'Sat': 7}
+                date = d['date'].slice(0,3)
+                if (date in Xvalue) {
+                  return Xvalue[date]*100;
+                } else {
+                  return 0;
+                }
+              })
+              .attr("cy", function(d) {
+                return 500 - (d[type]*500);
+              })
+              .attr("r", 1);
+
+              var text = svg.selectAll("text")
+              .data([[], [1, 5.25, 'Sunday'], [2, 5.25, 'Monday'], [3, 5.25, 'Tuesday'], [4, 5.25, 'Wednesday'], [5, 5.25, 'Thursday'], [6, 5.25, 'Friday'], [7, 5.25, 'Saturday'], [8.5, .25, 'More ' + type], [8.5, 5, 'Less ' + type], [4, .15, type.charAt(0).toUpperCase() + type.slice(1) + ' Sentiment of Tweets on "' + csv + '" by Day of Week']])
+              .enter()
+              .append("text")
+
+              text
+              .attr("x",  function(d) {return d[0]*100})
+              .attr("y", function(d) {return d[1]*100})
+              .attr("text-anchor", "middle")
+              .text(function(d) {return d[2]})
+              .attr("font-family", "sans-serif")
+              .attr("font-size", "12px")
+            
+            });
+        </script>
+    </body>
+</html>
