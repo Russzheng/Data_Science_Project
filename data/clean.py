@@ -1,6 +1,18 @@
 import pandas as pd
 from datetime import date
 
+def waitingTime_gapofDays():
+	import matplotlib.pyplot as plt
+	import scipy
+	from matplotlib import pylab
+	import seaborn as sns
+	sns.set_style("whitegrid")
+	plt.scatter(df['GapofDays'], df['AwaitingTime'])
+	plt.axis([0, 400, 0, 400])
+	plt.ylabel('Awaiting Time')
+	plt.xlabel('Gap of days (days)')
+	plt.show()
+
 df = pd.read_csv("No-show-Issue-Comma-300k.csv")
 
 #Cleaning AwaitingTime
@@ -39,6 +51,10 @@ df.rename(columns = {'ApointmentData':'AppointmentData',
 #check for null and nan values
 for column in df:
 	print(sorted(df[column].unique()))
+
+#check awaitingtime
+waitingTime_gapofDays()
+df = df.drop('AwaitingTime', 1)
 
 df.to_csv('clean_noshow.csv', mode = 'w', index=False)
 
