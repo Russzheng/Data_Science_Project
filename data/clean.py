@@ -36,6 +36,10 @@ df.rename(columns = {'ApointmentData':'AppointmentData',
                          'HiperTension': 'Hypertension',
                          'Handcap': 'Handicap'}, inplace = True)
 
+#check for null and nan values
+for column in df:
+	print(sorted(df[column].unique()))
+
 df.to_csv('clean_noshow.csv', mode = 'w', index=False)
 
 
