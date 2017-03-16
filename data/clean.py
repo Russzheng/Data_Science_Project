@@ -30,4 +30,22 @@ for index, row in df.iterrows():
 	li.append(delta.days)
 df.insert(4, 'GapofDays', li)
 
+#rename typos
+df.rename(columns = {'ApointmentData':'AppointmentData',
+                         'Alcoolism': 'Alchoholism',
+                         'HiperTension': 'Hypertension',
+                         'Handcap': 'Handicap'}, inplace = True)
+
 df.to_csv('clean_noshow.csv', mode = 'w', index=False)
+
+
+
+
+
+'''
+d0 = date(2008, 8, 18)
+d1 = date(2008, 9, 26)
+delta = d0 - d1
+print delta.days
+df.insert(idx, col_name, value)
+'''
