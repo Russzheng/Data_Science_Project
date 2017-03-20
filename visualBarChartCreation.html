@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>D3</title>
+        <script type="text/javascript" src="https://d3js.org/d3.v4.js"></script>
+        <style type="text/css">
+            
+            h2 {
+                align-content: center
+            }
+        </style>
+    </head>
+    <body>
+       
+
+      
+        <script type="text/javascript">
+            
+            d3.csv("./calc.csv",function(data) {
+         
+                // Convert strings to numerics.
+                data.forEach(function(d) {
+                   d.values = +d.values;                     
+                  });
+                
+                // Create the SVG container
+                var svg = d3.select("body")
+                            .append("svg")
+                            .attr("width",1000).attr("height",900)
+                            .style("border", "1px solid black");
+                
+                    var iniY = 150
+                    var ht = 25
+                
+                    // Method that scales  values
+                    var converter = d3.scaleLinear()
+                                      .domain([0,209269])
+                                      .range([0,580])
+
+
+                    
+                    // Select canvas for each data point
+                    var rects = svg.selectAll("rect")
+                                      .data(data)
+                                      .enter()
+                    
+                    // Append the initial movie name and domestic value
+                    rects.append("text")
+                         .attr("x",10)
+                         .attr("y",function(d,i){
+                                    return 21 + iniY + ((i+1)*ht)
+                                })
+                         .text(function(d,i) {
+                                var result = d.items
+                                return result
+                            })
+                          .attr("text-anchor", "start")
+                          .attr("font-family", "sans-serif")
+                          .attr("font-size", "12px")
+                    
+                    // Append the first rectangle for domestic data
+                    rects.append("rect")
+                          .attr("x",300)
+                          .attr("y",function(d,i){
+                                    return iniY + ((i+1)*ht)
+                                })
+                          .attr("width",function(d,i){
+                                    var res = d.values;
+                                    return converter(res);
+                                })
+                          .attr("height",ht)
+                          .style("fill",function(d,i) {
+                             if (i % 2 == 0)
+                                 return "purple";
+                             else
+                                 return "yellow";
+                    })
+                          .style("stroke","black")
+                          .style("stroke-width",2)
+                    
+                    
+                    // Append the text for gross data.
+                     rects.append("text")
+                         .attr("x",function(d,i) {
+                                var val = converter(d.values)
+                                var x = 300 + val + 5
+                                return x
+                                }) 
+                         .attr("y",function(d,i){
+                                    return 20 + iniY + ((i+1)*ht)
+                                })
+                         .text(function(d,i) {
+                                var result = d.values
+                                return result
+                            })
+                          .attr("text-anchor", "start")
+                          .attr("font-family", "sans-serif")
+                          .attr("font-size", "12px")
+                    
+                    // End of javascript.
+                          
+                   
+        });
+        </script>
+    </body>
+</html>
+
