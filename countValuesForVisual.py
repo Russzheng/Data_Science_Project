@@ -114,26 +114,35 @@ def main():
 	with open('./calc.csv','w') as f:
 		writer = csv.writer(f)
 		writer.writerow(['items','values'])
-		writer.writerow(['numNoShowsInTotal',numNoShowsInTotal])
-		writer.writerow(['numShowsInTotal',numShowsInTotal])
-		writer.writerow(['totalSmsNotSent',totolSmsNotSent])
-		writer.writerow(['totalSmsSent',totalSmsSent])
-		writer.writerow(['numShowsWhenSmsReminderSent',numShowsWhenSmsReminderSent])
-		writer.writerow(['numNoShowsWhenSmsReminderSent',numNoShowsWhenSmsReminderSent])
-		writer.writerow(['numNoShowsWhenSmsReminderNotSent',numNoShowsWhenSmsReminderNotSent])
-		writer.writerow(['numShowsWhenSmsReminderNotSent',numShowsWhenSmsReminderNotSent])
-		writer.writerow(['numShowsWhenDiabetus',numShowsWhenDiabetus])
-		writer.writerow(['numNoShowsWhenDiabetus',numNoShowsWhenDiabetus])
-		writer.writerow(['numNoShowsWhenAlcoholism',numNoShowsWhenAlcohol])
-		writer.writerow(['numShowsWhenAlcoholism',numShowsWhenAlcohol])
-		writer.writerow(['numShowsWhenHyperTension',numShowsWhenHyperTension])
-		writer.writerow(['numNoShowsWhenHyperTension',numNoShowsWhenHyperTension])
-		writer.writerow(['numNoShowsWhenHandicap',numNoShowsWhenHandicap])
-		writer.writerow(['numShowsWhenHandicap',numShowsWhenHandicap])
-		writer.writerow(['numShowsWhenSmoke',numShowsWhenSmoke])
-		writer.writerow(['numNoShowsWhenSmoke',numNoShowsWhenSmoke])
-		writer.writerow(['numNoShowsWhenTuberculosis',numNoShowsWhenTuber])
-		writer.writerow(['numShowsWhenTuberculosis',numShowsWhenTuber])
+		writer.writerow(['Total no. of no-shows',numNoShowsInTotal])
+		writer.writerow(['Total no. of Show-ups',numShowsInTotal])
+		#writer.writerow(['No. of ',totolSmsNotSent])
+		#writer.writerow(['totalSmsSent',totalSmsSent])
+		
+		writer.writerow(['No.of no-shows after SMSreminders',numNoShowsWhenSmsReminderSent])
+		writer.writerow(['No.of show-ups after SMSreminders',numShowsWhenSmsReminderSent])
+
+		writer.writerow(['No.of no-shows without SMSreminder',numNoShowsWhenSmsReminderNotSent])
+		writer.writerow(['No.of show-ups without SMSreminder',numShowsWhenSmsReminderNotSent])
+
+		writer.writerow(['No.of no-shows among diabetus patients',numNoShowsWhenDiabetus])
+		writer.writerow(['No.of show-ups among diabetus patients',numShowsWhenDiabetus])
+		
+		writer.writerow(['No.of no-shows among alcoholic patients',numNoShowsWhenAlcohol])
+		writer.writerow(['No.of show-ups among alcoholic patients',numShowsWhenAlcohol])
+
+		
+		writer.writerow(['No.of no-shows among patients with hypertension',numNoShowsWhenHyperTension])
+		writer.writerow(['No.of show-ups among patients with hypertension',numShowsWhenHyperTension])
+
+		writer.writerow(['No.of no-shows among handicap patients',numNoShowsWhenHandicap])
+		writer.writerow(['No.of show-ups among handicap patients',numShowsWhenHandicap])
+		
+		writer.writerow(['No.of no-shows among patients who smoke',numNoShowsWhenSmoke])
+		writer.writerow(['No.of show-ups among patients who smoke',numShowsWhenSmoke])
+
+		writer.writerow(['No.of no-shows among patients with tuberculosis',numNoShowsWhenTuber])
+		writer.writerow(['No.of show-ups among patients with tuberculosis',numShowsWhenTuber])
 
 if __name__=="__main__":
 	main()

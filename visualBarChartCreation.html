@@ -47,9 +47,12 @@
                     
                     // Append the initial movie name and domestic value
                     rects.append("text")
-                         .attr("x",10)
+                         .attr("x",20)
                          .attr("y",function(d,i){
-                                    return 21 + iniY + ((i+1)*ht)
+                                if (i % 2 == 0)
+                                    return 21 + iniY + ((i+1)*ht) + 13
+                                else
+                                    return 21 + iniY + ((i+1)*ht) + 8
                                 })
                          .text(function(d,i) {
                                 var result = d.items
@@ -57,13 +60,16 @@
                             })
                           .attr("text-anchor", "start")
                           .attr("font-family", "sans-serif")
-                          .attr("font-size", "12px")
+                          .attr("font-size", "10px")
                     
                     // Append the first rectangle for domestic data
                     rects.append("rect")
                           .attr("x",300)
                           .attr("y",function(d,i){
-                                    return iniY + ((i+1)*ht)
+                                    if (i % 2 == 0)
+                                    return 21 + iniY + ((i+1)*ht) + 6
+                                else
+                                    return 21 + iniY + ((i+1)*ht) 
                                 })
                           .attr("width",function(d,i){
                                     var res = d.values;
@@ -84,11 +90,14 @@
                      rects.append("text")
                          .attr("x",function(d,i) {
                                 var val = converter(d.values)
-                                var x = 300 + val + 5
+                                var x = 300 + val + 8
                                 return x
                                 }) 
                          .attr("y",function(d,i){
-                                    return 20 + iniY + ((i+1)*ht)
+                                if (i % 2 == 0)
+                                    return 21 + iniY + ((i+1)*ht) + 13
+                                else
+                                    return 21 + iniY + ((i+1)*ht) + 8
                                 })
                          .text(function(d,i) {
                                 var result = d.values
@@ -96,7 +105,7 @@
                             })
                           .attr("text-anchor", "start")
                           .attr("font-family", "sans-serif")
-                          .attr("font-size", "12px")
+                          .attr("font-size", "10px")
                     
                     // End of javascript.
                           
