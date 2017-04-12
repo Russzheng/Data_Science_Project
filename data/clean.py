@@ -56,6 +56,8 @@ for column in df:
 waitingTime_gapofDays()
 df = df.drop('AwaitingTime', 1)
 
+df = df[df.Age >= 0]
+
 df.to_csv('clean_noshow.csv', mode = 'w', index=False)
 
 

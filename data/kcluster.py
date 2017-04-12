@@ -13,6 +13,11 @@ def probStatusLR(dataset, group_by):
 df = pds.read_csv("clean_noshow.csv")
 k1 = probStatusLR(df, 'Age')
 
+count = df['Age'].value_counts().reset_index()
+count.columns = ['Age', 'count']
+count = count.sort('Age', ascending=True)
+count.to_csv(r'result.txt', index=None, sep=' ', mode='a')
+
 kmeans_model = KMeans(n_clusters=5, random_state=1)
 
 kmeans_model.fit(k1)

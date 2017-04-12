@@ -20,10 +20,12 @@ def main():
     #gapofDays()
     #sns.set_style("white")
     #gender()
+    dayoftheWeek()
     #dayoftheWeek_reg()
-    timeofDay()
+    #timeofDay()
     #timeofDay_lm()
-    
+    #age_bar()
+
 def probStatusLR(dataset, group_by):
     df = pds.crosstab(index = dataset[group_by], columns = dataset.Status).reset_index()
     df['probNoShow'] = df[0] / (df[1] + df[0])
@@ -38,6 +40,8 @@ def probStatusBar(group_by):
             n = len(data[(data[item] == dp) & (data.Status == 0)])
             row.update({'Ratio': n / total, 'Hue': dp})
             rows.append(row)
+    #df = pds.DataFrame(rows)
+    #print(df['Ratio'])
     return pds.DataFrame(rows)
 
 def age():
