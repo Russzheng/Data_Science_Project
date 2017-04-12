@@ -12,13 +12,14 @@ def probStatusLR(dataset, group_by):
 
 df = pds.read_csv("clean_noshow.csv")
 k1 = probStatusLR(df, 'Age')
-
+'''
 count = df['Age'].value_counts().reset_index()
 count.columns = ['Age', 'count']
 count = count.sort('Age', ascending=True)
 count.to_csv(r'result.txt', index=None, sep=' ', mode='a')
-
-kmeans_model = KMeans(n_clusters=5, random_state=1)
+'''
+num = 7
+kmeans_model = KMeans(n_clusters=7, random_state=1)
 
 kmeans_model.fit(k1)
 labels = kmeans_model.labels_
@@ -43,7 +44,7 @@ x = 'Age'
 y = 'probNoShow'
 
 plt.scatter(x=k1[x], y=k1[y], c=labels)
-plt.title('5-cluster')
+plt.title('7-cluster')
 plt.xlabel('Age')
 plt.ylabel('No-show Ratio')
 plt.show()
