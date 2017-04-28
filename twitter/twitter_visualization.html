@@ -36,8 +36,8 @@
               .data(dataset)
               .enter()
               .append("circle")
-              .attr("fill", "teal")
-              .attr("opacity", .01)
+              .attr("fill", "#003366")
+              .attr("opacity", .005)
               .attr("cx", function(d) {
                 Xvalue = {'Sun': 1, 'Mon': 2, 'Tue': 3, 'Wed': 4, 'Thu': 5, 'Fri': 6, 'Sat': 7}
                 date = d['date'].slice(0,3)
@@ -50,7 +50,7 @@
               .attr("cy", function(d) {
                 return 500 - (d[type]*500);
               })
-              .attr("r", 1);
+              .attr("r", 4);
 
               var text = svg.selectAll("text")
               .data([[], [1, 5.25, 'Sunday'], [2, 5.25, 'Monday'], [3, 5.25, 'Tuesday'], [4, 5.25, 'Wednesday'], [5, 5.25, 'Thursday'], [6, 5.25, 'Friday'], [7, 5.25, 'Saturday'], [8.5, .25, 'More ' + type], [8.5, 5, 'Less ' + type], [4, .15, type.charAt(0).toUpperCase() + type.slice(1) + ' Sentiment of Tweets on "' + csv + '" by Day of Week']])
