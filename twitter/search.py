@@ -7,7 +7,7 @@ import os
 
 def main():
   config = {}
-  execfile(os.getcwd() + "/config.py", config)
+  execfile("/Users/khsia/Desktop/finalproject/config.py", config)
   twitter = Twitter(
               auth = OAuth(config["access_key"], config["access_secret"], config["consumer_key"], config["consumer_secret"]))
   runQuery(twitter, "hospital")
@@ -16,15 +16,15 @@ def main():
 
 def runQuery(twitter, word):
   query = twitter.search.tweets(q = word, lang="en", count="100")
-  with open(os.getcwd() + "/" + word+".csv", 'a') as outfile:
+  with open("/Users/khsia/Desktop/finalproject/" + word+".csv", 'a') as outfile:
     writer = csv.writer(outfile)
     for result in query["statuses"]:
       text = result["text"].encode('utf-8')
       payload = {'text': text}
       r = requests.post("http://text-processing.com/api/sentiment/", data=payload)
-      positiveValue = r.json()["probability"]["pos"]
-      neutralValue = r.json()["probability"]["neutral"]
-      negativeValue = r.json()["probability"]["neg"]
+      positiveValue = round(r.json()["probability"]["pos"], 2)
+      neutralValue = round(r.json()["probability"]["neutral"], 2)
+      negativeValue = round(r.json()["probability"]["neg"], 2)
       writer.writerow([result["created_at"], text, positiveValue, neutralValue, negativeValue])
 
 if __name__ == '__main__':
