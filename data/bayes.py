@@ -6,7 +6,9 @@ from sklearn.naive_bayes import MultinomialNB
 from sklearn.metrics import accuracy_score
 from sklearn.linear_model import LogisticRegression
 from sklearn.svm import LinearSVC
+from sklearn.svm import LinearSVR
 from sklearn.svm import SVR
+from sklearn.svm import SVC
 
 #Age,Gender,AppointmentRegistration,AppointmentData,GapofDays,DayOfTheWeek,Status,Diabetes,
 #Alchoholism,Hypertension,Handicap,Smokes,Scholarship,Tuberculosis,Sms_Reminder
@@ -37,7 +39,7 @@ for sample_size in [150000, 170000, 200000, 210000, 230000, 250000, 270000, 2900
 	clf =  MultinomialNB().fit(features_train, labels_train)
 	print('Accuracy for MultinomialNB:', accuracy_score(labels_test, clf.predict(features_test), 2))
 
-	linear_svc = LinearSVC().fit(features_train, labels_train)
+	linear_svc = LinearSVR().fit(features_train, labels_train)
 	print('Accuracy for linear SVC:', accuracy_score(labels_test, linear_svc.predict(features_test), 2))
 
 	print('\n')
