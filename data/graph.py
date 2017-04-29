@@ -6,7 +6,8 @@ from datetime import date
 def probStatusLR(dataset, group_by):
     df = pds.crosstab(index = dataset[group_by], columns = dataset.Status).reset_index()
     df['NoShowRatio'] = df[0] / (df[1] + df[0])
-    return df[[group_by, 'NoShowRatio']]
+    df['NumberOfPatients'] = df[0] + df[1]
+    return df[[group_by, 'NoShowRatio', 'NumberOfPatients']]
 
 df = pds.read_csv('graph.csv')
 df = probStatusLR(df, 'AppointmentData')
