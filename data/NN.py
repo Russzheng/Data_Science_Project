@@ -18,7 +18,7 @@ numpy.random.seed(seed)
 # load dataset
 df = pandas.read_csv('for_review.csv')
 df = df[df.DayOfTheWeek != 7]
-sample_size = 10000
+sample_size = 200
 # split into input (X) and output (Y) variables
 features_train = df[['Age', 'DayOfTheWeek', 'Diabetes', 'Hypertension', 'Tuberculosis', 'Smokes',
                              'Handicap', 'Alchoholism', 'Scholarship', 'Sms_Reminder']].iloc[:sample_size]
