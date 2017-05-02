@@ -18,9 +18,9 @@ numpy.random.seed(seed)
 # load dataset
 df = pandas.read_csv('for_review.csv')
 df = df[df.DayOfTheWeek != 7]
-sample_size = 200
+sample_size = 10000
 # split into input (X) and output (Y) variables
-features_train = df[['Age', 'DayOfTheWeek', 'Diabetes', 'Hypertension', 'Tuberculosis', 'Smokes',
+features_train = df[['Age', 'DayOfTheWeek', 'Diabetes', 'Hypertension', 'Smokes',
                              'Handicap', 'Alchoholism', 'Scholarship', 'Sms_Reminder']].iloc[:sample_size]
 features_train.to_csv('temp.csv', header=False, index=False)
 features_train = pandas.read_csv('temp.csv')
@@ -38,7 +38,7 @@ labels_train = numpy.ravel(labels_train)
 def create_baseline():
 	# create model
 	model = Sequential()
-	model.add(Dense(12, input_dim=10, kernel_initializer='normal', activation='relu'))
+	model.add(Dense(12, input_dim=9, kernel_initializer='normal', activation='relu'))
 	model.add(Dense(6, kernel_initializer='normal', activation='relu'))
 	model.add(Dense(1, kernel_initializer='normal', activation='sigmoid'))
 	# Compile model
