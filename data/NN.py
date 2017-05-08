@@ -11,6 +11,15 @@ from sklearn.model_selection import StratifiedKFold
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
 
+def normalization(X):
+    temp = []
+    mean_arr = numpy.mean(X, axis=0) 
+    std_arr = numpy.std(X, axis=0) 
+    for row in X:
+        temp.append((row - mean_arr) / std_arr)
+    temp = numpy.array(temp).astype('float32')
+    return temp
+
 # fix random seed for reproducibility
 seed = 7
 numpy.random.seed(seed)
@@ -22,10 +31,11 @@ sample_size = 10000
 # split into input (X) and output (Y) variables
 features_train = df[['Age', 'DayOfTheWeek', 'Diabetes', 'Hypertension', 'Smokes',
                              'Handicap', 'Alchoholism', 'Scholarship', 'Sms_Reminder']].iloc[:sample_size]
-features_train.to_csv('temp.csv', header=False, index=False)
-features_train = pandas.read_csv('temp.csv')
+features_train.to_csv('temp_1.csv', header=False, index=False)
+features_train = pandas.read_csv('temp_1.csv')
 features_train = features_train.values
 features_train = features_train.astype('float32')
+features_train = normalization(features_train)
 
 labels_train = df.Status[:sample_size]
 labels_train.to_csv('temp_2.csv', header=False, index=False)
@@ -53,3 +63,6 @@ kfold = StratifiedKFold(n_splits=10, shuffle=True, random_state=seed)
 results = cross_val_score(pipeline, features_train, labels_train, cv=kfold)
 print('Training size:', sample_size)
 print("Standardized: %.2f%% (%.2f%%)" % (results.mean()*100, results.std()*100))
+
+os.remove('temp_1.csv')
+os.remove('temp_2.csv')
