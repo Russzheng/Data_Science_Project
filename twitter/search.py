@@ -1,4 +1,5 @@
-#!/usr/bin/python
+#Uses the Twitter API to obtain tweets related to hospital, appointment, and hospital appointment
+#Config file not uploaded to github due to sensitive and personal information (e.g. login information)
 
 from twitter import *
 import csv
