@@ -1,0 +1,82 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <title>Health Data Science </title>
+</head>
+
+<body>
+
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <div class="page-header center">
+                <h1>Clinical data analysis of hospital appointment no show rate for outpatients</h1>
+            </div>
+<hr>
+                <h3>Recommend overbooking approach</h3> <br/>
+            
+            <div class="form-group row">
+              <div class="col-xs-4">
+                <label for="ex1">Hospital Name</label>
+                <input class="form-control" id="hosp" type="text">
+              </div>
+                <div class="col-xs-4">
+                <label for="ex1">Regular outpatient capacity per day</label>
+                <input class="form-control" id="capacity" type="text">
+              </div>
+               
+            </div>
+            
+            <br><br>
+            <strong>Choose date</strong>
+            <div class="input-group date col-md-3" data-date-format="dd-mm-yyyy" data-date="01-01-2014">                        
+    <input id="mypick" class="form-control" type="text" readonly="" value="01-01-2014" size="14" />
+    <span class="input-group-addon add-on">
+        <span class="glyphicon glyphicon-calendar"</span>
+    </span></div>
+                
+                 <script type="text/javascript">
+                     
+                     var hosp = document.getElementById("hosp").value;
+                     var capacity = document.getElementById("capacity").value;
+                     
+                     // TODO
+                     document.getElementById("comment").value = hosp+capacity;
+                     $('.date').datepicker();
+                     
+            
+                    </script>  <br><br>
+                 <div class="form-group row">
+                <div class="col-xs-4">
+                <label for="ex1">Current number of bookings on above selected date</label>
+                <input class="form-control" id="current" type="text">
+              </div>
+            </div>
+                             
+
+              <div class="form-group">
+  <label for="comment">Our recommendation:</label>
+  <textarea class="form-control" rows="5" id="comment"></textarea>
+</div>
+        
+                	
+				
+    </div>
+    </div>
+
+
+ 
+
+</body>
+</html>
