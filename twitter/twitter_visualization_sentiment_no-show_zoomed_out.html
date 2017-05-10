@@ -1,12 +1,12 @@
+<!--Plots sentiment by no show rate, matched up by day of the week. Zoomed out axis with trendline. -->
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
         <title>D3: Movie Bar Chart</title>
         <script type="text/javascript" src="https://d3js.org/d3.v4.js"></script>
-        <style type="text/css">
-            /* No style rules here yet */ 
-          
+        <style type="text/css">          
             body {
               padding: 10px;
             }
@@ -35,6 +35,8 @@
         </h1>
         <p class="text">Explore how the positive or negative sentiment of Tweets on various days of the week affect the no-show rate of hospital appointments.</p>
         <script type="text/javascript">
+
+            var decimalFormat = d3.format("0.2f");
 
             var type = "Positive"
             var word = "hospital appointment"
@@ -89,16 +91,11 @@
 
             d3.csv(csv, function(dataset) {
 
-              xMin = d3.min(dataset, function(d) { return d[type + " Average"]; } );
-              xMax = d3.max(dataset, function(d) { return d[type + " Average"]; } );
-              yMin = d3.min(dataset, function(d) { return d["Percent No Show"]; } );
-              yMax = d3.max(dataset, function(d) { return d["Percent No Show"]; } );
-              //Padding
-              xMin = xMin - (xMax-xMin)*.1;
-              xMax = xMax - -(xMax-xMin)*.1;
-              yMin = yMin - (yMax-yMin)*.1;
-              yMax = yMax - -(yMax-yMin)*.1;
-                
+              xMin = 0;//d3.min(dataset, function(d) { return d[type + " Average"]; } );
+              xMax = 1;//d3.max(dataset, function(d) { return d[type + " Average"]; } );
+              yMin = 0;//d3.min(dataset, function(d) { return d["Percent No Show"]; } );
+              yMax = 1;//d3.max(dataset, function(d) { return d["Percent No Show"]; } );
+              
               //Scale
               xScale = d3.scaleLinear().domain([xMin, xMax]).range([0, width]);
               yScale = d3.scaleLinear().domain([yMin, yMax]).range([ height, 0]);
@@ -151,8 +148,34 @@
               .text("Percent No Show");
 
               //Line
-              
-            
+             trend = trends(dataset)
+             xValues = xVals(trend)
+
+              var trendline = svg.selectAll(".trendline")
+              .data([0, 1, 2, 3])
+              .enter()
+              .append("line")
+              .attr("id", "trendline")
+              .attr("class", "trendline")
+              .attr("x1", function(d) {
+               return xScale(xValues["lowerX"]); })
+              .attr("y1", function(d) { 
+                return yScale(trend["a"]+xValues["lowerX"]*trend["b"]); })
+              .attr("x2", function(d) { 
+                return xScale(xValues["upperX"]); })
+              .attr("y2", function(d) { return yScale(trend["a"]+xValues["upperX"]*trend["b"]); })
+              .attr("stroke", "black")
+              .attr("stroke-width", 1);
+
+              svg.append("text")
+              .attr("id", "rsq")
+              .text("r-sq: " + decimalFormat(trend["r"]))
+              .attr("class", "text-label")
+              .attr("x", function(d) {
+                return 420;
+              })
+              .attr("y", function(d) {return 30 ;});      
+
               //Dots
               dot = svg.append("g");
 
@@ -176,27 +199,30 @@
               var csv = word + "_computed.csv"
 
               d3.csv(csv, function(dataset) {
-
-                //Bounds
-                var xMin = d3.min(dataset, function(d) { return d[type + " Average"]; } );
-                var xMax = d3.max(dataset, function(d) { return d[type + " Average"]; } );
-                //Padding
-                xMin = xMin - (xMax-xMin)*.1;
-                xMax = xMax - -(xMax-xMin)*.1;
-                  
-                //Scale
-                xScale.domain([xMin, xMax]);
-
-                xAxis.scale(xScale);
-
-                d3.select('#xAxis') // redraw the yAxis
-                .transition().duration(1000)
-                .call(xAxis);
-
                 d3.select("#title")
                 .transition().duration(1000)
                 .text(type + " sentiment on the term: " + word)
-                    
+                   
+                //Trendline
+              trend = trends(dataset)
+              xValues = xVals(trend)
+
+              d3.selectAll("#trendline")
+              .transition().duration(1000)
+              .attr("x1", function(d) {
+               return xScale(xValues["lowerX"]); })
+              .attr("y1", function(d) { 
+                return yScale(trend["a"]+xValues["lowerX"]*trend["b"]); })
+              .attr("x2", function(d) { 
+                return xScale(xValues["upperX"]); })
+              .attr("y2", function(d) { return yScale(trend["a"]+xValues["upperX"]*trend["b"]); });
+              
+              d3.selectAll("#rsq")
+                .transition().duration(1000)
+                .text("r-sq: " + decimalFormat(trend["r"]));
+            
+
+             
                 d3.selectAll('circle') // move the circles
                 .transition().duration(1000)
                 .delay(function (d,i) { return i*100})
@@ -212,24 +238,9 @@
             }
 
             function xChange() {
-              var type = this.value // get the new x value
+              type = this.value // get the new x value
 
               d3.csv(csv, function(dataset) {
-
-                var xMin = d3.min(dataset, function(d) { return d[type + " Average"]; } );
-                var xMax = d3.max(dataset, function(d) { return d[type + " Average"]; } );
-                //Padding
-                xMin = xMin - (xMax-xMin)*.1;
-                xMax = xMax - -(xMax-xMin)*.1;
-                  
-                //Scale
-                xScale.domain([xMin, xMax]);
-
-                xAxis.scale(xScale);
-
-                d3.select('#xAxis') // redraw the yAxis
-                .transition().duration(1000)
-                .call(xAxis);
 
                 d3.select('#xAxisLabel')
                 .transition().duration(1000)
@@ -238,6 +249,27 @@
                 d3.select("#title")
                 .transition().duration(1000)
                 .text(type + " sentiment on the term: " + word)
+
+                //Trendline
+
+                                //Trendline
+              trend = trends(dataset)
+              xValues = xVals(trend)
+              d3.selectAll("#trendline")
+              .transition().duration(1000)
+              .attr("x1", function(d) {
+               return xScale(xValues["lowerX"]); })
+              .attr("y1", function(d) { 
+                return yScale(trend["a"]+xValues["lowerX"]*trend["b"]); })
+              .attr("x2", function(d) { 
+                return xScale(xValues["upperX"]); })
+              .attr("y2", function(d) { return yScale(trend["a"]+xValues["upperX"]*trend["b"]); });
+              
+              
+              d3.selectAll("#rsq")
+                .transition().duration(1000)
+                .text("r-sq: " + decimalFormat(trend["r"]));
+
                     
                 d3.selectAll('circle') // move the circles
                 .transition().duration(1000)
@@ -251,6 +283,47 @@
                   return xScale(d[type + ' Average']);
                 })
               });
+            }
+
+            function trends(dataset) {
+              sum_x = 0;
+              sum_y = 0;
+              sum_xy = 0;
+              sum_xx = 0;
+              sum_yy = 0;
+              n = 0;
+              
+              dataset.map(function(d) {
+                x = parseFloat(d[type + " Average"]);
+                y = parseFloat(d["Percent No Show"]);
+                sum_x += x;
+                sum_y += y;
+                sum_xy += x*y;
+                sum_xx += x*x;
+                sum_yy += y*y;
+                n += 1;
+              });
+
+              b = (n*sum_xy - sum_x*sum_y)/(n*sum_xx - sum_x*sum_x)
+              a = (sum_y - b*sum_x) / n
+              r = (n*sum_xy-sum_x*sum_y)/Math.sqrt((n*sum_xx-sum_x*sum_x)*(n*sum_yy-sum_y*sum_y))
+              return {"a": a, "b": b, "r": r};
+            }
+
+            function xVals(trends) { 
+            graphMin = 0
+            graphMax = .99
+            lowerX = (graphMin-trend["a"])/trend["b"]
+             upperX = (graphMax-trend["a"])/trend["b"]
+             if (lowerX < upperX) { 
+               lowerX = Math.max(lowerX, graphMin)
+               upperX = Math.min(upperX, graphMax)
+             } else {
+               lowerX = Math.min(lowerX, graphMax)
+               upperX = Math.max(upperX, graphMin)
+             }
+             return {"lowerX": lowerX, "upperX": upperX}
+
             }
 
 

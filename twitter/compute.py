@@ -1,3 +1,6 @@
+#Computes basic information about the cleaned data, like average and standard deviation for 
+#positive and negative sentiment as well as the ratio of positive average to negative average
+
 import csv
 import numpy
 
